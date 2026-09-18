@@ -3,1124 +3,983 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CSkilled — Get Skilled | Programming · AI · Competitive Programming</title>
-  <meta name="description" content="CSkilled – Learn programming, competitive programming, problem solving and AI. Get 10% off with promo code Genesis MET. Access Telegram, LinkedIn and YouTube channels." />
+  <title>CSkilled — Build Your Skills. Think Better. Solve Smarter.</title>
+  <meta name="description" content="CSkilled – Learn programming, competitive programming, problem solving and AI. Get 10% off with promo code Genesis MET. Join Telegram, LinkedIn, and YouTube channels." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,900&display=swap" rel="stylesheet" />
   <style>
-    /* ─── COLOR PALETTE (extracted from skiled.jpeg) ───────────────────── */
-    :root {
-      --sky:        #29ABE2;  /* light sky blue  */
-      --sky-mid:    #1D96D3;  /* mid blue        */
-      --deep:       #1565C0;  /* deep brand blue */
-      --deeper:     #0D47A1;  /* darkest blue    */
-      --ink:        #0B1F3A;  /* near-black navy */
-      --paper:      #F0F8FF;
-      --white:      #FFFFFF;
-      --muted:      #5A7FA8;
-      --line:       rgba(29,150,211,.22);
-      --offer:      #FFD700;  /* gold – max contrast on blue */
-      --offer-glow: rgba(255,215,0,.42);
-      --shadow:     0 24px 64px rgba(11,31,58,.22);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      min-height: 100vh;
-      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(ellipse 80% 60% at 15% 10%, rgba(41,171,226,.26), transparent 55%),
-        radial-gradient(ellipse 70% 50% at 85% 80%, rgba(21,101,192,.2),  transparent 50%),
-        linear-gradient(160deg, #e8f4fd 0%, #c9e8f9 35%, #d6eeff 65%, #eaf4ff 100%);
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(29,150,211,.055) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(29,150,211,.055) 1px, transparent 1px);
-      background-size: 52px 52px;
-      mask-image: linear-gradient(to bottom, #000, transparent 78%);
-      z-index: 0;
-    }
-
-    button, a { font: inherit; }
-
-    .page {
-      position: relative;
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto;
-      padding: 24px 0 60px;
-      z-index: 1;
-    }
-
-    /* ════════════════════════════════════════════════════════════════════════
-       PROMO HEADER
-    ════════════════════════════════════════════════════════════════════════ */
-    .promo-header {
-      background: linear-gradient(135deg, var(--deeper) 0%, var(--deep) 42%, var(--sky-mid) 100%);
-      border-radius: 28px;
-      margin-bottom: 40px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 28px 80px rgba(21,101,192,.32), inset 0 1px 0 rgba(255,255,255,.1);
-    }
-
-    .promo-header::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 55% 90% at 92% 28%, rgba(41,171,226,.24), transparent 58%),
-        radial-gradient(ellipse 45% 55% at  8% 78%, rgba(13,71,161,.38),  transparent 52%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .promo-header::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.032) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.032) 1px, transparent 1px);
-      background-size: 44px 44px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .promo-nav {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 22px 28px 0;
-    }
-
-    .promo-header .brand-text strong { color: #fff; }
-    .promo-header .brand-text span   { color: rgba(255,255,255,.6); }
-
-    .promo-header .icon-button,
-    .promo-header .theme-button {
-      background: rgba(255,255,255,.12);
-      border-color: rgba(255,255,255,.22);
-      color: #fff;
-      box-shadow: none;
-    }
-    .promo-header .icon-button:hover,
-    .promo-header .theme-button:hover {
-      background: rgba(255,255,255,.22);
-      box-shadow: none;
-    }
-
-    .promo-hero-area {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: clamp(24px, 5vw, 68px);
-      align-items: center;
-      padding: 30px 28px 40px;
-    }
-
-    /* Platform tags */
-    .platform-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 22px;
-      animation: fadeUp .8s cubic-bezier(.22,1,.36,1) .08s both;
-    }
-
-    .platform-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 5px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.11);
-      border: 1px solid rgba(255,255,255,.2);
-      color: rgba(255,255,255,.9);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .3px;
-      backdrop-filter: blur(8px);
-      transition: background .2s ease;
-    }
-
-    .platform-tag::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--sky);
-      flex-shrink: 0;
-    }
-
-    .platform-tag--ai {
-      background: rgba(255,215,0,.14);
-      border-color: rgba(255,215,0,.38);
-      color: var(--offer);
-      font-weight: 800;
-    }
-    .platform-tag--ai::before { background: var(--offer); }
-    .platform-tag:hover        { background: rgba(255,255,255,.2); }
-
-    /* Header headline */
-    .header-headline {
-      margin: 0 0 18px;
-      font-size: clamp(28px, 4vw, 56px);
-      font-weight: 900;
-      line-height: .95;
-      letter-spacing: -2px;
-      color: #fff;
-      animation: fadeUp .9s cubic-bezier(.22,1,.36,1) .18s both;
-    }
-
-    .header-headline em {
-      font-style: normal;
-      color: var(--offer);
-      text-shadow: 0 0 44px rgba(255,215,0,.45);
-    }
-
-    /* Supporting text */
-    .header-support {
-      max-width: 530px;
-      margin: 0 0 30px;
-      font-size: clamp(14px, 1.5vw, 17px);
-      line-height: 1.74;
-      color: rgba(255,255,255,.7);
-      font-weight: 400;
-      animation: fadeUp .9s cubic-bezier(.22,1,.36,1) .28s both;
-    }
-
-    /* Offer row */
-    .header-offer {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      animation: fadeUp .9s cubic-bezier(.22,1,.36,1) .36s both;
-    }
-
-    .offer-badge {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 5px;
-      padding: 12px 20px;
-      border-radius: 18px;
-      background: var(--offer);
-      box-shadow: 0 8px 28px rgba(255,215,0,.45), inset 0 1px 0 rgba(255,255,255,.4);
-    }
-
-    .offer-pct {
-      font-size: 46px;
-      font-weight: 900;
-      line-height: 1;
-      color: var(--deeper);
-      letter-spacing: -2px;
-    }
-
-    .offer-label {
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--deeper);
-      letter-spacing: 1.5px;
-      align-self: flex-end;
-      margin-bottom: 4px;
-    }
-
-    .offer-code-box {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      padding: 11px 18px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.09);
-      border: 1px dashed rgba(255,255,255,.32);
-    }
-
-    .offer-code-box .offer-code-label {
-      font-size: 10.5px;
-      color: rgba(255,255,255,.58);
-      font-weight: 700;
-      letter-spacing: .8px;
-      text-transform: uppercase;
-    }
-
-    .offer-code-box code {
-      font-size: 16px;
-      font-weight: 900;
-      color: #fff;
-      font-family: inherit;
-      letter-spacing: .2px;
-    }
-
-    .offer-copy-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 13px 22px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.13);
-      border: 1.5px solid rgba(255,255,255,.28);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform .22s ease, background .22s ease;
-      backdrop-filter: blur(8px);
-    }
-
-    .offer-copy-btn:hover {
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.24);
-    }
-
-    /* Right logo column in header */
-    .header-logo-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      flex-shrink: 0;
-    }
-
-    .header-logo-big {
-      width: clamp(130px, 14vw, 196px);
-      height: clamp(130px, 14vw, 196px);
-      object-fit: cover;
-      border-radius: 38px;
-      border: 4px solid rgba(255,255,255,.96);
-      box-shadow:
-        0 0 0 8px  rgba(41,171,226,.26),
-        0 0 0 16px rgba(41,171,226,.1),
-        0 36px 90px rgba(13,71,161,.54);
-      animation: headerLogoZoom 1.9s cubic-bezier(.16,1.2,.36,1) both;
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: crisp-edges;
-    }
-
-    @keyframes headerLogoZoom {
-      0%   { transform: scale(0.16); opacity: 0; filter: blur(16px); }
-      48%  { transform: scale(1.1);  opacity: 1; filter: blur(0); }
-      70%  { transform: scale(0.96); }
-      100% { transform: scale(1);    opacity: 1; filter: blur(0); }
-    }
-
-    .header-logo-tagline {
-      font-size: 12px;
-      font-weight: 700;
-      color: rgba(255,255,255,.6);
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-      text-align: center;
-    }
-
-    /* ════════════════════════════════════════════════════════════════════════
-       BRAND / NAV COMMON
-    ════════════════════════════════════════════════════════════════════════ */
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .brand-logo-wrap {
-      position: relative;
-      flex-shrink: 0;
-      width: 68px;
-      height: 68px;
-      border-radius: 20px;
-      overflow: visible;
-      animation: logoReveal 1.2s cubic-bezier(.16,1.2,.36,1) both;
-    }
-
-    .brand-logo-wrap img {
-      width: 68px;
-      height: 68px;
-      object-fit: cover;
-      border-radius: 20px;
-      border: 2.5px solid rgba(255,255,255,.95);
-      box-shadow:
-        0 0 0 5px rgba(41,171,226,.26),
-        0 0 0 9px rgba(41,171,226,.1),
-        0 18px 44px rgba(21,101,192,.36);
-      display: block;
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: crisp-edges;
-    }
-
-    .brand-logo-wrap::after {
-      content: "";
-      position: absolute;
-      inset: -8px;
-      border-radius: 28px;
-      border: 2px solid rgba(41,171,226,.5);
-      animation: pulseRing 2.2s ease-in-out infinite 1.4s;
-    }
-
-    @keyframes logoReveal {
-      0%   { transform: scale(0.28) translateY(12px); opacity: 0; filter: blur(6px); }
-      55%  { transform: scale(1.1)  translateY(-3px); opacity: 1; filter: blur(0); }
-      100% { transform: scale(1)   translateY(0);    opacity: 1; filter: blur(0); }
-    }
-
-    @keyframes pulseRing {
-      0%, 100% { transform: scale(1);    opacity: .8; }
-      50%       { transform: scale(1.18); opacity: 0;  }
-    }
-
-    .brand-text strong {
-      display: block;
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: -.5px;
-      color: var(--deeper);
-    }
-
-    .brand-text span {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      margin-top: 3px;
-      letter-spacing: .1px;
-    }
-
-    .nav-actions { display: flex; gap: 10px; align-items: center; }
-
-    .icon-button,
-    .theme-button {
-      width: 44px;
-      height: 44px;
-      display: inline-grid;
-      place-items: center;
-      border-radius: 50%;
-      border: 1.5px solid var(--line);
-      background: rgba(255,255,255,.7);
-      color: var(--deep);
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(21,101,192,.1);
-      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-      backdrop-filter: blur(12px);
-    }
-
-    .icon-button:hover,
-    .theme-button:hover {
-      transform: translateY(-2px);
-      background: var(--white);
-      box-shadow: 0 12px 32px rgba(21,101,192,.18);
-    }
-
-    /* ════════════════════════════════════════════════════════════════════════
-       HERO SECTION
-    ════════════════════════════════════════════════════════════════════════ */
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(320px, 480px);
-      align-items: center;
-      gap: clamp(32px, 6vw, 96px);
-      padding-bottom: 48px;
-    }
-
-    .hero-copy { position: relative; z-index: 1; }
-
-    /* ── Billboard discount ──────────────────────────────────────────── */
-    .hero-discount {
-      margin-bottom: 28px;
-      animation: fadeUp .9s cubic-bezier(.22,1,.36,1) .08s both;
-    }
-
-    .discount-num-row {
-      display: flex;
-      align-items: flex-end;
-      gap: 4px;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .discount-num {
-      font-size: clamp(100px, 16vw, 176px);
-      font-weight: 900;
-      letter-spacing: -8px;
-      color: var(--deeper);
-      line-height: .86;
-    }
-
-    .discount-sym {
-      font-size: clamp(44px, 7vw, 82px);
-      font-weight: 900;
-      color: var(--sky-mid);
-      letter-spacing: -2px;
-      margin-bottom: 18px;
-    }
-
-    .discount-off-pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 10px 22px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--deep) 0%, var(--sky-mid) 100%);
-      color: #fff;
-      font-size: 20px;
-      font-weight: 900;
-      letter-spacing: 2.5px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 28px rgba(21,101,192,.4);
-      flex-shrink: 0;
-    }
-
-    .discount-caption {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--muted);
-      letter-spacing: .2px;
-    }
-
-    /* ── Hero promo code row ─────────────────────────────────────────── */
-    .hero-code-row {
-      margin-bottom: 30px;
-      animation: fadeUp .9s cubic-bezier(.22,1,.36,1) .22s both;
-    }
-
-    .hero-code-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--muted);
-      letter-spacing: .8px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .hero-code-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 18px;
-      border-radius: 18px;
-      border: 1.5px solid var(--line);
-      background: rgba(255,255,255,.72);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 8px 28px rgba(21,101,192,.1);
-    }
-
-    .hero-code-pill code {
-      font-size: 19px;
-      font-weight: 900;
-      color: var(--deep);
-      font-family: inherit;
-      letter-spacing: .4px;
-    }
-
-    .hero-code-copy {
-      width: 38px;
-      height: 38px;
-      display: inline-grid;
-      place-items: center;
-      border: 0;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--deep), var(--sky-mid));
-      color: #fff;
-      cursor: pointer;
-      transition: transform .18s ease, box-shadow .18s ease;
-      box-shadow: 0 4px 14px rgba(21,101,192,.32);
-    }
-
-    .hero-code-copy:hover {
-      transform: scale(1.1);
-      box-shadow: 0 8px 22px rgba(21,101,192,.44);
-    }
-
-    /* ── Hero heading ────────────────────────────────────────────────── */
-    .hero-h2 {
-      max-width: 640px;
-      font-size: clamp(30px, 5.5vw, 64px);
-      line-height: .96;
-      letter-spacing: -2px;
-      font-weight: 900;
-      color: var(--deeper);
-      margin-bottom: 16px;
-      animation: fadeUp .9s cubic-bezier(.22,1,.36,1) .38s both;
-    }
-
-    .hero-h2 em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--sky) 0%, var(--deep) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* ── Lead text ───────────────────────────────────────────────────── */
-    .lead {
-      max-width: 560px;
-      color: var(--muted);
-      font-size: clamp(15px, 1.6vw, 18px);
-      line-height: 1.75;
-      animation: fadeUp .9s cubic-bezier(.22,1,.36,1) .48s both;
-    }
-
-    /* ── CTA row ─────────────────────────────────────────────────────── */
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 26px;
-      animation: fadeUp .9s cubic-bezier(.22,1,.36,1) .58s both;
-    }
-
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 52px;
-      padding: 0 24px;
-      border-radius: 999px;
-      text-decoration: none;
-      border: 1.5px solid transparent;
-      font-weight: 800;
-      cursor: pointer;
-      font-size: 15px;
-      transition: transform .22s ease, box-shadow .22s ease;
-    }
-
-    .cta.primary {
-      color: #fff;
-      background: linear-gradient(135deg, var(--deep) 0%, var(--sky) 100%);
-      box-shadow: 0 14px 36px rgba(21,101,192,.38);
-    }
-
-    .cta.secondary {
-      color: var(--deep);
-      background: rgba(255,255,255,.75);
-      border-color: var(--line);
-      backdrop-filter: blur(12px);
-    }
-
-    .cta:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 20px 48px rgba(21,101,192,.32);
-    }
-
-    /* ── Metrics ─────────────────────────────────────────────────────── */
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 30px;
-      max-width: 520px;
-      animation: fadeUp .9s cubic-bezier(.22,1,.36,1) .68s both;
-    }
-
-    .metric {
-      padding: 16px 14px;
-      border-radius: 18px;
-      border: 1.5px solid var(--line);
-      background: rgba(255,255,255,.62);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 8px 24px rgba(21,101,192,.08);
-    }
-
-    .metric strong {
-      display: block;
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--deep);
-    }
-
-    .metric span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 500;
-      margin-top: 4px;
-    }
-
-    @keyframes fadeUp {
-      0%   { opacity: 0; transform: translateY(22px); }
-      100% { opacity: 1; transform: translateY(0);    }
-    }
-
-    /* ════════════════════════════════════════════════════════════════════════
-       LOGO STAGE  (replaces the phone)
-    ════════════════════════════════════════════════════════════════════════ */
-    .logo-stage {
-      position: relative;
-      display: grid;
-      place-items: center;
-      min-height: 600px;
-      animation: fadeUp 1s cubic-bezier(.22,1,.36,1) .1s both;
-    }
-
-    /* Ambient glow blob behind logo */
-    .logo-stage::before {
-      content: "";
-      position: absolute;
-      width: 480px;
-      height: 480px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(41,171,226,.26) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* Outer orbit ring */
-    .logo-orbit {
-      position: absolute;
-      width: min(90vw, 510px);
-      aspect-ratio: 1;
-      border: 1.5px dashed rgba(29,150,211,.28);
-      border-radius: 50%;
-      animation: spin 22s linear infinite;
-    }
-
-    .logo-orbit::before,
-    .logo-orbit::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-    }
-
-    .logo-orbit::before {
-      width: 20px;
-      height: 20px;
-      background: var(--sky);
-      top: 36px;
-      left: 70px;
-      box-shadow: 0 0 18px rgba(41,171,226,.8);
-    }
-
-    .logo-orbit::after {
-      width: 13px;
-      height: 13px;
-      background: var(--deep);
-      bottom: 44px;
-      right: 56px;
-      box-shadow: 0 0 14px rgba(21,101,192,.7);
-    }
-
-    /* Inner orbit ring */
-    .logo-orbit-2 {
-      position: absolute;
-      width: min(68vw, 378px);
-      aspect-ratio: 1;
-      border: 1px dashed rgba(29,150,211,.16);
-      border-radius: 50%;
-      animation: spin 14s linear infinite reverse;
-    }
-
-    /* The logo image */
-    .logo-display { position: relative; z-index: 2; }
-
-    .logo-display img {
-      width: min(72vw, 316px);
-      height: min(72vw, 316px);
-      object-fit: cover;
-      border-radius: 58px;
-      border: 5px solid rgba(255,255,255,.98);
-      box-shadow:
-        0 0 0 10px rgba(41,171,226,.2),
-        0 0 0 22px rgba(41,171,226,.08),
-        0 48px 110px rgba(21,101,192,.46),
-        0 12px 32px rgba(21,101,192,.3);
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: crisp-edges;
-      animation: logoFloat 5.5s ease-in-out infinite;
-    }
-
-    @keyframes logoFloat {
-      0%, 100% { transform: translateY(0)    scale(1); }
-      50%       { transform: translateY(-18px) scale(1.015); }
-    }
-
-    /* Floating info cards around logo */
-    .logo-card {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.88);
-      border: 1.5px solid rgba(255,255,255,.9);
-      box-shadow: 0 14px 40px rgba(21,101,192,.16);
-      backdrop-filter: blur(20px);
-      animation: float 5s ease-in-out infinite;
-      z-index: 3;
-    }
-
-    .logo-card.top-right  { top: 72px;  right: -8px; }
-    .logo-card.bot-left   { left: -8px; bottom: 80px; animation-delay: -2.2s; }
-
-    .logo-card svg    { width: 22px; height: 22px; color: var(--sky); flex-shrink: 0; }
-    .logo-card strong { display: block; font-size: 13px; font-weight: 800; color: var(--deeper); }
-    .logo-card span   { display: block; color: var(--muted); font-size: 11px; }
-
-    /* "Get Skilled" label below logo */
-    .logo-label {
-      position: absolute;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--muted);
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      white-space: nowrap;
-      z-index: 2;
-    }
-
-    /* ════════════════════════════════════════════════════════════════════════
-       LINKS SECTION
-    ════════════════════════════════════════════════════════════════════════ */
-    .links-section {
-      display: grid;
-      grid-template-columns: .8fr 1.2fr;
-      gap: 28px;
-      align-items: start;
-      padding: 60px 0 12px;
-    }
-
-    .section-title h2 {
-      margin: 0;
-      font-size: clamp(28px, 4.5vw, 48px);
-      line-height: 1;
-      letter-spacing: -1px;
-      font-weight: 900;
-      color: var(--deeper);
-    }
-
-    .section-title h2 em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--sky) 0%, var(--deep) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .section-title p {
-      max-width: 360px;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 15px;
-      margin-top: 12px;
-    }
-
-    .link-list { display: grid; gap: 12px; }
-
-    .tile {
-      display: grid;
-      grid-template-columns: 52px minmax(0, 1fr) 32px;
-      align-items: center;
-      gap: 14px;
-      min-height: 78px;
-      padding: 16px;
-      border-radius: 22px;
-      border: 1.5px solid var(--line);
-      background: rgba(255,255,255,.72);
-      text-decoration: none;
-      color: var(--ink);
-      box-shadow: 0 10px 28px rgba(21,101,192,.08);
-      transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease;
-      backdrop-filter: blur(12px);
-    }
-
-    .tile:hover {
-      transform: translateX(6px);
-      background: var(--white);
-      border-color: rgba(41,171,226,.45);
-      box-shadow: 0 18px 48px rgba(21,101,192,.16);
-    }
-
-    .tile-icon {
-      display: grid;
-      place-items: center;
-      width: 52px;
-      height: 52px;
-      border-radius: 18px;
-      color: #fff;
-      background: linear-gradient(135deg, var(--sky) 0%, var(--deep) 100%);
-      box-shadow: 0 6px 18px rgba(21,101,192,.28);
-    }
-
-    .tile:nth-child(2) .tile-icon { background: linear-gradient(135deg, var(--sky-mid), var(--deeper)); }
-    .tile:nth-child(3) .tile-icon { background: linear-gradient(135deg, var(--deep), #0a3d91); }
-    .tile:nth-child(4) .tile-icon { background: linear-gradient(135deg, var(--sky), var(--sky-mid)); }
-
-    .tile strong { display: block; font-size: 15px; font-weight: 800; color: var(--deeper); }
-
-    .tile-copy,
-    .tile-copy span { display: block; color: var(--muted); font-size: 13px; }
-    .tile-copy      { margin-top: 0; }
-    .tile-copy span { margin-top: 3px; }
-
-    .arrow { justify-self: end; opacity: .45; color: var(--sky); }
-
-    /* ════════════════════════════════════════════════════════════════════════
-       TOAST
-    ════════════════════════════════════════════════════════════════════════ */
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 24px;
-      z-index: 10;
-      transform: translate(-50%, 90px);
-      padding: 12px 20px;
-      border-radius: 999px;
-      color: #fff;
-      background: linear-gradient(135deg, var(--deeper), var(--sky-mid));
-      box-shadow: 0 14px 40px rgba(21,101,192,.3);
-      opacity: 0;
-      transition: transform .28s ease, opacity .28s ease;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .toast.show { transform: translate(-50%, 0); opacity: 1; }
-
-    /* ════════════════════════════════════════════════════════════════════════
-       DARK MODE
-    ════════════════════════════════════════════════════════════════════════ */
-    .dark {
-      color: #e8f4ff;
-      background:
-        radial-gradient(ellipse 80% 60% at 15% 10%, rgba(41,171,226,.16), transparent 55%),
-        radial-gradient(ellipse 70% 50% at 85% 80%, rgba(21,101,192,.12), transparent 50%),
-        linear-gradient(160deg, #06111e 0%, #091828 50%, #061324 100%);
-    }
-
-    .dark .hero-h2              { color: #e8f4ff; }
-    .dark .brand-text strong    { color: #a8d5f7; }
-    .dark .section-title h2     { color: #c5e4ff; }
-    .dark .discount-num         { color: #c5e4ff; }
-
-    .dark .lead,
-    .dark .section-title p,
-    .dark .brand-text span,
-    .dark .tile-copy,
-    .dark .tile-copy span,
-    .dark .metric span          { color: #7aaecc; }
-
-    .dark .icon-button,
-    .dark .theme-button,
-    .dark .metric,
-    .dark .tile                 { color: #e8f4ff; background: rgba(11,28,52,.78); border-color: rgba(41,171,226,.18); }
-
-    .dark .cta.secondary        { color: #e8f4ff; background: rgba(11,28,52,.72); border-color: rgba(41,171,226,.2); }
-
-    .dark .hero-code-pill       { background: rgba(11,28,52,.78); border-color: rgba(41,171,226,.2); }
-    .dark .hero-code-pill code  { color: #a8d5f7; }
-
-    .dark .logo-card            { background: rgba(11,28,52,.84); border-color: rgba(41,171,226,.18); }
-    .dark .logo-card strong     { color: #c5e4ff; }
-    .dark .logo-card span       { color: #7aaecc; }
-
-    .dark .promo-header {
-      background: linear-gradient(135deg, #060c18 0%, var(--deeper) 45%, var(--deep) 100%);
-      box-shadow: 0 28px 80px rgba(13,71,161,.4), inset 0 1px 0 rgba(255,255,255,.07);
-    }
-
-    .dark .offer-copy-btn       { background: rgba(255,255,255,.1); }
-    .dark .offer-copy-btn:hover { background: rgba(255,255,255,.2); }
-
-    /* ════════════════════════════════════════════════════════════════════════
-       KEYFRAMES
-    ════════════════════════════════════════════════════════════════════════ */
-    @keyframes spin  { to { transform: rotate(1turn); } }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0);    }
-      50%       { transform: translateY(-14px); }
-    }
-
-    /* ════════════════════════════════════════════════════════════════════════
-       RESPONSIVE
-    ════════════════════════════════════════════════════════════════════════ */
-    @media (max-width: 900px) {
-      .hero             { grid-template-columns: 1fr; }
-      .logo-stage       { min-height: 480px; order: -1; }
-      .logo-display img { width: 230px; height: 230px; border-radius: 44px; }
-      .links-section    { grid-template-columns: 1fr; }
-      .promo-hero-area  { grid-template-columns: 1fr; gap: 28px; padding: 24px 22px 32px; }
-      .header-logo-col  { flex-direction: row; justify-content: flex-start; order: -1; gap: 16px; }
-      .header-logo-big  { width: 86px; height: 86px; border-radius: 24px; border-width: 3px; }
-      .header-logo-tagline { display: none; }
-    }
-
-    @media (max-width: 620px) {
-      .page             { width: min(100% - 24px, 1180px); padding-top: 14px; }
-      .promo-header     { border-radius: 20px; margin-bottom: 28px; }
-      .promo-nav        { padding: 16px 18px 0; }
-      .promo-hero-area  { padding: 20px 18px 28px; gap: 20px; }
-      .header-headline  { font-size: 26px; letter-spacing: -1px; }
-      .header-support   { font-size: 13px; margin-bottom: 20px; }
-      .offer-pct        { font-size: 36px; }
-      .offer-label      { font-size: 14px; }
-      .offer-badge      { padding: 10px 14px; }
-      .nav-actions .icon-button { display: none; }
-      .discount-num     { font-size: 96px; letter-spacing: -5px; }
-      .discount-sym     { font-size: 40px; }
-      .discount-off-pill{ font-size: 16px; padding: 8px 16px; }
-      .hero-code-pill code { font-size: 16px; }
-      .hero-h2          { font-size: 32px; letter-spacing: -1px; }
-      .metrics          { grid-template-columns: 1fr; }
-      .logo-stage       { min-height: 360px; }
-      .logo-display img { width: min(72vw, 200px); height: min(72vw, 200px); border-radius: 36px; }
-      .logo-card        { display: none; }
-      .logo-label       { display: none; }
-      .tile             { grid-template-columns: 46px minmax(0, 1fr) 24px; }
-    }
+  /* ════════════════════════════════════════════════════════════════════
+     DESIGN SYSTEM — colors extracted from skiled.jpeg logo
+  ════════════════════════════════════════════════════════════════════ */
+  :root {
+    /* Logo blue gradient (light → deep) */
+    --b1: #29ABE2;   /* sky      */
+    --b2: #1D96D3;   /* mid-sky  */
+    --b3: #1565C0;   /* deep     */
+    --b4: #0D47A1;   /* deepest  */
+    --b5: #07305A;   /* navy     */
+
+    /* Text */
+    --ink:    #0B1F3A;
+    --muted:  #5A7FA8;
+    --subtle: #8AAFC8;
+
+    /* Surface */
+    --white:  #FFFFFF;
+    --paper:  #F0F8FF;
+    --glass:  rgba(255,255,255,.12);
+    --glass2: rgba(255,255,255,.08);
+    --line-d: rgba(255,255,255,.16);   /* divider on dark bg */
+    --line-l: rgba(29,150,211,.2);    /* divider on light bg */
+
+    /* Discount gold */
+    --gold:   #FFD700;
+    --gold-d: #E6B800;
+
+    /* Shadows */
+    --sh-blue: 0 24px 72px rgba(13,71,161,.45);
+    --sh-card: 0 12px 36px rgba(13,71,161,.12);
+  }
+
+  /* ── Reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html  { scroll-behavior: smooth; }
+  button, a { font: inherit; }
+  img   { display: block; }
+
+  body {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    overflow-x: hidden;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     LAYOUT WRAPPERS
+  ════════════════════════════════════════════════════════════════════ */
+  .w {
+    width: min(1160px, 100% - 48px);
+    margin-inline: auto;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     ① NAV BAR — sticky, uses logo's deep blue
+  ════════════════════════════════════════════════════════════════════ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,71,161,.96);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line-d);
+    box-shadow: 0 4px 32px rgba(7,48,90,.4);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 68px;
+  }
+
+  /* Brand in nav */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .brand-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,.85);
+    box-shadow: 0 0 0 4px rgba(41,171,226,.3), 0 8px 22px rgba(13,71,161,.5);
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    animation: navLogoIn 1s cubic-bezier(.22,1,.36,1) both;
+  }
+
+  @keyframes navLogoIn {
+    0%   { transform: scale(.4); opacity: 0; filter: blur(4px); }
+    60%  { transform: scale(1.06); opacity: 1; filter: blur(0); }
+    100% { transform: scale(1);   opacity: 1; }
+  }
+
+  .brand-text {
+    line-height: 1;
+  }
+  .brand-name {
+    font-size: 16px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -.3px;
+  }
+  .brand-sub {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,.55);
+    margin-top: 3px;
+    letter-spacing: .3px;
+  }
+
+  /* Nav actions */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line-d);
+    background: var(--glass);
+    color: rgba(255,255,255,.88);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-btn:hover      { background: rgba(255,255,255,.2); transform: translateY(-1px); }
+  .nav-btn.icon-only  { padding: 8px 10px; }
+
+  /* ════════════════════════════════════════════════════════════════════
+     ② HERO — full-viewport, dark logo-gradient background
+  ════════════════════════════════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    min-height: calc(100vh - 68px);
+    background:
+      radial-gradient(ellipse 70% 80% at 90% 40%, rgba(29,150,211,.3), transparent 60%),
+      radial-gradient(ellipse 50% 60% at  5% 70%, rgba(7,48,90,.5),    transparent 55%),
+      linear-gradient(145deg, var(--b5) 0%, var(--b4) 30%, var(--b3) 65%, var(--b2) 100%);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Dot-grid overlay */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  /* Bottom fade to paper */
+  .hero::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(transparent, var(--paper));
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr minmax(320px, 460px);
+    align-items: center;
+    gap: clamp(40px, 6vw, 100px);
+    padding: 72px 0 100px;
+  }
+
+  /* ── Hero LEFT: Offer + Headline ── */
+  .hero-copy { position: relative; }
+
+  /* Platform topics */
+  .topic-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+    animation: slideUp .7s cubic-bezier(.22,1,.36,1) .05s both;
+  }
+
+  .topic {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--line-d);
+    background: var(--glass);
+    color: rgba(255,255,255,.88);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    backdrop-filter: blur(8px);
+  }
+
+  .topic::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--b1);
+    flex-shrink: 0;
+  }
+
+  .topic-ai {
+    border-color: rgba(255,215,0,.4);
+    background: rgba(255,215,0,.12);
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .topic-ai::before { background: var(--gold); }
+
+  /* Main headline */
+  .hero-headline {
+    font-size: clamp(36px, 5.5vw, 72px);
+    font-weight: 900;
+    line-height: .94;
+    letter-spacing: -2.5px;
+    color: #fff;
+    margin-bottom: 16px;
+    animation: slideUp .8s cubic-bezier(.22,1,.36,1) .12s both;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--gold);
+    text-shadow: 0 0 48px rgba(255,215,0,.35);
+  }
+
+  /* Support line */
+  .hero-sub {
+    font-size: clamp(15px, 1.6vw, 18px);
+    line-height: 1.72;
+    color: rgba(255,255,255,.68);
+    max-width: 500px;
+    margin-bottom: 38px;
+    animation: slideUp .8s cubic-bezier(.22,1,.36,1) .2s both;
+  }
+
+  /* ── DISCOUNT BLOCK — the star of the show ── */
+  .discount-block {
+    margin-bottom: 28px;
+    animation: slideUp .9s cubic-bezier(.22,1,.36,1) .28s both;
+  }
+
+  .discount-card {
+    display: inline-flex;
+    align-items: stretch;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 2px rgba(255,215,0,.35),
+      0 0 0 6px rgba(255,215,0,.1),
+      0 24px 60px rgba(7,48,90,.5),
+      inset 0 1px 0 rgba(255,255,255,.15);
+  }
+
+  /* Big number column */
+  .dc-number {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 28px;
+    background: var(--gold);
+    gap: 0;
+    min-width: 140px;
+  }
+
+  .dc-pct {
+    font-size: clamp(64px, 10vw, 112px);
+    font-weight: 900;
+    color: var(--b4);
+    line-height: .88;
+    letter-spacing: -4px;
+  }
+
+  .dc-off {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--b4);
+    letter-spacing: 3px;
+    margin-top: 4px;
+  }
+
+  /* Code + label column */
+  .dc-code {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 18px 24px;
+    background: rgba(7,48,90,.88);
+    backdrop-filter: blur(12px);
+    border-left: 1px solid rgba(255,215,0,.2);
+  }
+
+  .dc-code-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,.5);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  .dc-code-value {
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: .5px;
+    font-family: inherit;
+  }
+
+  .dc-code-sub {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,.45);
+  }
+
+  /* Copy button column */
+  .dc-copy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 22px;
+    background: var(--b3);
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    transition: background .22s ease;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    flex-direction: column;
+    border-left: 1px solid rgba(255,255,255,.1);
+  }
+
+  .dc-copy:hover   { background: var(--b2); }
+  .dc-copy svg     { flex-shrink: 0; }
+  .dc-copy-label   { font-size: 10px; font-weight: 600; opacity: .7; letter-spacing: .5px; }
+
+  /* ── CTAs ── */
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    animation: slideUp .8s cubic-bezier(.22,1,.36,1) .4s both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 50px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 800;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: transform .22s, box-shadow .22s;
+  }
+
+  .btn-primary {
+    background: #fff;
+    color: var(--b4);
+    box-shadow: 0 12px 32px rgba(255,255,255,.2);
+  }
+
+  .btn-secondary {
+    background: var(--glass);
+    border-color: var(--line-d);
+    color: #fff;
+    backdrop-filter: blur(8px);
+  }
+
+  .btn:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(7,48,90,.4); }
+
+  /* ── Hero RIGHT: Logo Stage ── */
+  .logo-stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 520px;
+    animation: slideUp 1s cubic-bezier(.22,1,.36,1) .05s both;
+  }
+
+  /* Glow blob */
+  .logo-stage::before {
+    content: "";
+    position: absolute;
+    width: 440px;
+    height: 440px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(41,171,226,.28) 0%, transparent 68%);
+    pointer-events: none;
+  }
+
+  /* Outer orbit */
+  .orbit-outer {
+    position: absolute;
+    width: min(88vw, 490px);
+    aspect-ratio: 1;
+    border: 1.5px dashed rgba(255,255,255,.15);
+    border-radius: 50%;
+    animation: spin 24s linear infinite;
+  }
+
+  .orbit-outer::before,
+  .orbit-outer::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .orbit-outer::before {
+    width: 18px; height: 18px;
+    top: 34px; left: 66px;
+    background: var(--b1);
+    box-shadow: 0 0 18px rgba(41,171,226,.9), 0 0 36px rgba(41,171,226,.4);
+  }
+
+  .orbit-outer::after {
+    width: 12px; height: 12px;
+    bottom: 42px; right: 54px;
+    background: var(--gold);
+    box-shadow: 0 0 14px rgba(255,215,0,.8);
+  }
+
+  /* Inner orbit */
+  .orbit-inner {
+    position: absolute;
+    width: min(66vw, 360px);
+    aspect-ratio: 1;
+    border: 1px dashed rgba(255,255,255,.1);
+    border-radius: 50%;
+    animation: spin 15s linear infinite reverse;
+  }
+
+  /* The logo */
+  .logo-img-wrap {
+    position: relative;
+    z-index: 2;
+  }
+
+  .logo-img {
+    width: min(70vw, 300px);
+    height: min(70vw, 300px);
+    object-fit: cover;
+    border-radius: 52px;
+    border: 5px solid rgba(255,255,255,.96);
+    box-shadow:
+      0 0 0 10px rgba(41,171,226,.2),
+      0 0 0 22px rgba(41,171,226,.08),
+      0 48px 110px rgba(7,48,90,.7),
+      0 12px 32px rgba(13,71,161,.5);
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    animation: logoZoom 1.8s cubic-bezier(.16,1.1,.36,1) .05s both, logoFloat 6s ease-in-out 2s infinite;
+  }
+
+  @keyframes logoZoom {
+    0%   { transform: scale(.2);  opacity: 0; filter: blur(14px); }
+    50%  { transform: scale(1.06); opacity: 1; filter: blur(0); }
+    72%  { transform: scale(.97); }
+    100% { transform: scale(1);   opacity: 1; }
+  }
+
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%       { transform: translateY(-16px) scale(1.012); }
+  }
+
+  /* Info cards floating around logo */
+  .logo-card {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 15px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.22);
+    backdrop-filter: blur(20px);
+    animation: floatCard 5s ease-in-out infinite;
+    color: #fff;
+  }
+
+  .logo-card-top   { top: 68px; right: 0; }
+  .logo-card-bot   { bottom: 72px; left: 0; animation-delay: -2.4s; }
+
+  .logo-card svg   { width: 20px; height: 20px; flex-shrink: 0; color: var(--b1); }
+  .logo-card strong { display: block; font-size: 13px; font-weight: 800; color: #fff; }
+  .logo-card span   { display: block; font-size: 11px; color: rgba(255,255,255,.6); }
+
+  .logo-card-bot strong { color: var(--gold); }
+
+  .logo-tagline {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,.4);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  @keyframes spin       { to { transform: rotate(1turn); } }
+  @keyframes floatCard  { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+  @keyframes slideUp {
+    0%   { opacity: 0; transform: translateY(24px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     ③ SUBJECTS STRIP
+  ════════════════════════════════════════════════════════════════════ */
+  .subjects {
+    background: var(--paper);
+    padding: 36px 0;
+    border-bottom: 1px solid var(--line-l);
+  }
+
+  .subjects-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .subject-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: var(--white);
+    border: 1.5px solid var(--line-l);
+    box-shadow: var(--sh-card);
+    transition: transform .22s, box-shadow .22s;
+  }
+
+  .subject-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(13,71,161,.18);
+  }
+
+  .subject-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    color: #fff;
+  }
+
+  .si-1 { background: linear-gradient(135deg, var(--b1), var(--b3)); }
+  .si-2 { background: linear-gradient(135deg, var(--b3), var(--b4)); }
+  .si-3 { background: linear-gradient(135deg, var(--b2), var(--b3)); }
+  .si-4 { background: linear-gradient(135deg, var(--gold-d), #c9960a); }
+  .si-4 svg { color: #fff !important; }
+
+  .subject-info strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--b4);
+  }
+
+  .subject-info span {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     ④ CHANNELS SECTION
+  ════════════════════════════════════════════════════════════════════ */
+  .channels {
+    background: var(--paper);
+    padding: 64px 0 80px;
+  }
+
+  .section-head {
+    margin-bottom: 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(29,150,211,.1);
+    border: 1px solid var(--line-l);
+    color: var(--b3);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .section-tag::before {
+    content: "";
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--b1);
+  }
+
+  .section-title {
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    color: var(--b4);
+    line-height: 1;
+  }
+
+  .section-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--b1), var(--b3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 340px;
+    margin-top: 10px;
+  }
+
+  .channel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .channel-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1.5px solid var(--line-l);
+    background: var(--white);
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: var(--sh-card);
+    transition: transform .22s, border-color .22s, box-shadow .22s;
+  }
+
+  .channel-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(29,150,211,.4);
+    box-shadow: 0 20px 56px rgba(13,71,161,.16);
+  }
+
+  .channel-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(13,71,161,.28);
+  }
+
+  .ci-1 { background: linear-gradient(135deg, var(--b1), var(--b3)); }
+  .ci-2 { background: linear-gradient(135deg, var(--b2), var(--b4)); }
+  .ci-3 { background: linear-gradient(135deg, var(--b3), var(--b5)); }
+  .ci-4 { background: linear-gradient(135deg, var(--b1), var(--b2)); }
+
+  .channel-info { flex: 1; min-width: 0; }
+  .channel-info strong { display: block; font-size: 15px; font-weight: 800; color: var(--b4); }
+  .channel-info span   { display: block; font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+
+  .channel-arrow { color: var(--b1); opacity: .5; flex-shrink: 0; }
+
+  /* ════════════════════════════════════════════════════════════════════
+     ⑤ FOOTER CTA STRIP
+  ════════════════════════════════════════════════════════════════════ */
+  .footer-strip {
+    background: linear-gradient(135deg, var(--b4) 0%, var(--b3) 50%, var(--b2) 100%);
+    padding: 48px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-strip::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .footer-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-text strong {
+    display: block;
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -1px;
+  }
+
+  .footer-text p {
+    font-size: 15px;
+    color: rgba(255,255,255,.65);
+    margin-top: 6px;
+  }
+
+  .footer-text em { color: var(--gold); font-style: normal; font-weight: 800; }
+
+  .footer-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* ════════════════════════════════════════════════════════════════════
+     TOAST
+  ════════════════════════════════════════════════════════════════════ */
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 999;
+    transform: translate(-50%, 80px);
+    padding: 13px 22px;
+    border-radius: 999px;
+    background: var(--b4);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 12px 40px rgba(13,71,161,.4);
+    opacity: 0;
+    transition: transform .26s ease, opacity .26s ease;
+    pointer-events: none;
+  }
+
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+  /* ════════════════════════════════════════════════════════════════════
+     DARK MODE
+  ════════════════════════════════════════════════════════════════════ */
+  .dark body,
+  body.dark {
+    background: #071322;
+    color: #e0eeff;
+  }
+
+  body.dark .subjects,
+  body.dark .channels { background: #071322; }
+
+  body.dark .subject-card,
+  body.dark .channel-card {
+    background: rgba(13,71,161,.18);
+    border-color: rgba(29,150,211,.18);
+    color: #e0eeff;
+  }
+
+  body.dark .subject-card:hover,
+  body.dark .channel-card:hover {
+    background: rgba(13,71,161,.28);
+    border-color: rgba(41,171,226,.35);
+  }
+
+  body.dark .subject-info strong,
+  body.dark .channel-info strong,
+  body.dark .section-title { color: #c5e4ff; }
+
+  body.dark .subject-info span,
+  body.dark .channel-info span,
+  body.dark .section-desc,
+  body.dark .hero-sub { color: #7aaecc; }
+
+  body.dark .subjects  { border-color: rgba(29,150,211,.12); }
+
+  /* ════════════════════════════════════════════════════════════════════
+     RESPONSIVE
+  ════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 960px) {
+    .hero-inner       { grid-template-columns: 1fr; min-height: auto; padding: 60px 0 80px; gap: 48px; }
+    .logo-stage       { order: -1; min-height: 420px; }
+    .logo-img         { width: 220px; height: 220px; border-radius: 42px; }
+    .logo-card        { display: none; }
+    .subjects-inner   { grid-template-columns: repeat(2, 1fr); }
+    .channel-grid     { grid-template-columns: 1fr; }
+    .section-head     { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 620px) {
+    .w                { width: calc(100% - 32px); }
+    .nav-inner        { height: 60px; }
+    .brand-logo       { width: 38px; height: 38px; border-radius: 10px; }
+    .brand-name       { font-size: 15px; }
+    .nav-btn.hide-sm  { display: none; }
+    .hero-headline    { font-size: 36px; letter-spacing: -1.5px; }
+    .hero-sub         { font-size: 15px; }
+    .dc-pct           { font-size: 64px; }
+    .dc-off           { font-size: 15px; }
+    .dc-code-value    { font-size: 17px; }
+    .discount-card    { flex-direction: column; border-radius: 18px; width: 100%; }
+    .dc-number        { flex-direction: row; gap: 12px; align-items: baseline; padding: 18px 22px; justify-content: flex-start; }
+    .dc-code          { padding: 14px 22px; border-left: 0; border-top: 1px solid rgba(255,215,0,.2); }
+    .dc-copy          { flex-direction: row; padding: 14px 22px; border-left: 0; border-top: 1px solid rgba(255,255,255,.1); }
+    .subjects-inner   { grid-template-columns: 1fr; }
+    .subjects         { padding: 28px 0; }
+    .channels         { padding: 44px 0 56px; }
+    .logo-tagline     { display: none; }
+    .footer-inner     { flex-direction: column; align-items: flex-start; }
+  }
   </style>
 </head>
 <body>
-  <main class="page">
 
-    <!-- ══════════ PROMO HEADER ══════════════════════════════════════════════ -->
-    <header class="promo-header" aria-label="CSkilled educational platform">
+  <!-- ══════════════════════════════════════════════════════════════════
+       ① NAVIGATION
+  ═══════════════════════════════════════════════════════════════════ -->
+  <nav class="nav" aria-label="CSkilled navigation">
+    <div class="w nav-inner">
 
-      <div class="promo-nav">
-        <a class="brand" href="#" aria-label="CSkilled home">
-          <div class="brand-logo-wrap">
-            <img src="skiled.jpeg" alt="CSkilled logo — Get Skilled" width="68" height="68" />
-          </div>
-          <div class="brand-text">
-            <strong>CSkilled</strong>
-            <span>Get Skilled</span>
-          </div>
+      <a class="brand" href="#" aria-label="CSkilled home">
+        <img class="brand-logo" src="skiled.jpeg" alt="CSkilled logo" width="44" height="44" />
+        <div class="brand-text">
+          <div class="brand-name">CSkilled</div>
+          <div class="brand-sub">Get Skilled</div>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a class="nav-btn hide-sm" href="#channels" aria-label="Go to channels">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          Channels
         </a>
-
-        <nav class="nav-actions" aria-label="Site navigation">
-          <a class="icon-button" href="#links" aria-label="Go to links" title="Go to links">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
-          </a>
-          <button class="theme-button" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-          </button>
-        </nav>
+        <button class="nav-btn icon-only" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
       </div>
 
-      <div class="promo-hero-area">
-        <div class="promo-content">
+    </div>
+  </nav>
 
-          <div class="platform-tags" aria-label="Platform topics">
-            <span class="platform-tag">Programming</span>
-            <span class="platform-tag">Competitive Programming</span>
-            <span class="platform-tag">Problem Solving</span>
-            <span class="platform-tag platform-tag--ai">AI</span>
-          </div>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ② HERO  — headline · discount · logo
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section class="hero" aria-label="CSkilled promotional hero">
+    <div class="w hero-inner">
 
-          <h1 class="header-headline">
-            Build Your Skills.<br>Think Better. <em>Solve Smarter.</em>
-          </h1>
-
-          <p class="header-support">
-            Learn programming and AI through practical learning and deep understanding — not memorization.
-          </p>
-
-          <div class="header-offer" aria-label="Exclusive 10% discount offer">
-            <div class="offer-badge">
-              <span class="offer-pct">10%</span>
-              <span class="offer-label">OFF</span>
-            </div>
-            <div class="offer-code-box">
-              <span class="offer-code-label">Promo code</span>
-              <code>Genesis MET</code>
-            </div>
-            <button class="offer-copy-btn" id="headerCopy" aria-label="Copy promo code">
-              Copy code
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
-
-        </div>
-
-        <div class="header-logo-col" aria-hidden="true">
-          <img class="header-logo-big" src="skiled.jpeg" alt="CSkilled — Get Skilled" />
-          <span class="header-logo-tagline">Get Skilled</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- ══════════ HERO ═══════════════════════════════════════════════════════ -->
-    <section class="hero" aria-label="Offer and channels section">
+      <!-- LEFT: Copy -->
       <div class="hero-copy">
 
-        <!-- Billboard 10% discount -->
-        <div class="hero-discount" aria-label="10% exclusive discount">
-          <div class="discount-num-row">
-            <span class="discount-num" aria-label="10 percent off">10</span>
-            <span class="discount-sym">%</span>
-            <span class="discount-off-pill">OFF</span>
-          </div>
-          <p class="discount-caption">Exclusive learning discount · Limited availability</p>
+        <!-- Platform tags -->
+        <div class="topic-row" aria-label="Topics covered">
+          <span class="topic">Programming</span>
+          <span class="topic">Competitive Programming</span>
+          <span class="topic">Problem Solving</span>
+          <span class="topic topic-ai">AI</span>
         </div>
 
-        <!-- Promo code -->
-        <div class="hero-code-row">
-          <p class="hero-code-label">Your promo code</p>
-          <div class="hero-code-pill">
-            <code id="promoText">Genesis MET</code>
-            <button class="hero-code-copy" id="heroCodeCopy" aria-label="Copy promo code">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
-        </div>
+        <!-- Headline (page h1) -->
+        <h1 class="hero-headline">
+          Build Your Skills.<br>
+          Think Better.<br>
+          <em>Solve Smarter.</em>
+        </h1>
 
-        <h2 class="hero-h2">All your <em>learning channels</em> in one smart&nbsp;page.</h2>
-        <p class="lead">
-          A dynamic one-page hub for CSkilled links, social channels, and promo access.
-          Copy the code, explore the channels, and move through the page with a clean app-like feel.
+        <!-- Support text -->
+        <p class="hero-sub">
+          Learn programming and AI through practical learning and deep understanding — not memorization.
         </p>
 
-        <div class="cta-row">
-          <a class="cta primary" href="#links" id="exploreLinks">
-            Explore links
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <!-- ★ DISCOUNT BLOCK ★ -->
+        <div class="discount-block" aria-label="Exclusive 10% discount offer">
+          <div class="discount-card">
+
+            <!-- Big number -->
+            <div class="dc-number">
+              <span class="dc-pct" aria-label="10 percent">10</span>
+              <span class="dc-off">% OFF</span>
+            </div>
+
+            <!-- Promo code -->
+            <div class="dc-code">
+              <span class="dc-code-label">Promo code</span>
+              <code class="dc-code-value" id="promoText">Genesis MET</code>
+              <span class="dc-code-sub">Exclusive · Limited time</span>
+            </div>
+
+            <!-- Copy button -->
+            <button class="dc-copy" id="heroCodeCopy" aria-label="Copy promo code">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span class="dc-copy-label">COPY</span>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#channels" id="exploreBtn">
+            Explore channels
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
-          <button class="cta secondary" id="heroCopy">
+          <button class="btn btn-secondary" id="heroCopy">
             Copy promo code
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
         </div>
 
-        <div class="metrics" aria-label="Highlights">
-          <div class="metric">
-            <strong data-count="4">0</strong>
-            <span>quick channels</span>
-          </div>
-          <div class="metric">
-            <strong>10%</strong>
-            <span>exclusive promo</span>
-          </div>
-          <div class="metric">
-            <strong>1</strong>
-            <span>smart hub page</span>
-          </div>
-        </div>
       </div>
 
-      <!-- ── CSkilled logo (replaces phone) ─────────────────────────────────── -->
-      <div class="logo-stage">
-        <div class="logo-orbit"></div>
-        <div class="logo-orbit-2"></div>
+      <!-- RIGHT: CSkilled Logo Stage -->
+      <div class="logo-stage" aria-hidden="true">
+        <div class="orbit-outer"></div>
+        <div class="orbit-inner"></div>
 
-        <!-- Top-right: brand card -->
-        <div class="logo-card top-right" aria-hidden="true">
+        <!-- Top card -->
+        <div class="logo-card logo-card-top">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           <div>
             <strong>CSkilled</strong>
@@ -1128,13 +987,13 @@
           </div>
         </div>
 
-        <!-- Large CSkilled logo -->
-        <div class="logo-display">
-          <img src="skiled.jpeg" alt="CSkilled — Get Skilled logo" />
+        <!-- Logo -->
+        <div class="logo-img-wrap">
+          <img class="logo-img" src="skiled.jpeg" alt="CSkilled — Get Skilled" />
         </div>
 
-        <!-- Bottom-left: discount reminder -->
-        <div class="logo-card bot-left" aria-hidden="true">
+        <!-- Bottom card -->
+        <div class="logo-card logo-card-bot">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><path d="M7 7h.01"/></svg>
           <div>
             <strong>10% Discount</strong>
@@ -1142,97 +1001,178 @@
           </div>
         </div>
 
-        <span class="logo-label">Get Skilled</span>
-      </div>
-    </section>
-
-    <!-- ══════════ LINKS SECTION ═══════════════════════════════════════════════ -->
-    <section class="links-section" id="links" aria-label="Important links">
-      <div class="section-title">
-        <h2>Open the right <em>channel</em> fast.</h2>
-        <p>These cards connect you directly to CSkilled's community, social channels, and content — all in one place.</p>
+        <span class="logo-tagline">Get Skilled</span>
       </div>
 
-      <div class="link-list">
-        <a class="tile" target="_blank" rel="noopener" href="https://t.me/mostvision" id="linkTelegram">
-          <span class="tile-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></span>
-          <span class="tile-copy"><strong>Telegram — MostaVision</strong><span>Community, announcements, and updates.</span></span>
-          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       ③ SUBJECTS STRIP
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section class="subjects" aria-label="Platform subjects">
+    <div class="w subjects-inner">
+
+      <div class="subject-card">
+        <div class="subject-icon si-1">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="subject-info">
+          <strong>Programming</strong>
+          <span>Core skills & patterns</span>
+        </div>
+      </div>
+
+      <div class="subject-card">
+        <div class="subject-icon si-2">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        </div>
+        <div class="subject-info">
+          <strong>Competitive Programming</strong>
+          <span>Algorithms & problem solving</span>
+        </div>
+      </div>
+
+      <div class="subject-card">
+        <div class="subject-icon si-3">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        </div>
+        <div class="subject-info">
+          <strong>Problem Solving</strong>
+          <span>Logic & analytical thinking</span>
+        </div>
+      </div>
+
+      <div class="subject-card">
+        <div class="subject-icon si-4">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <div class="subject-info">
+          <strong>Artificial Intelligence</strong>
+          <span>Modern AI through deep understanding</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       ④ CHANNELS
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section class="channels" id="channels" aria-label="Learning channels">
+    <div class="w">
+
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Quick access</div>
+          <h2 class="section-title">Open the right <em>channel</em> fast.</h2>
+          <p class="section-desc">All of CSkilled's community and content channels in one place.</p>
+        </div>
+      </div>
+
+      <div class="channel-grid">
+
+        <a class="channel-card" href="https://t.me/mostvision" target="_blank" rel="noopener" id="linkTelegram">
+          <span class="channel-icon ci-1">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          </span>
+          <div class="channel-info">
+            <strong>Telegram — MostaVision</strong>
+            <span>Community, announcements, and updates</span>
+          </div>
+          <svg class="channel-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
 
-        <a class="tile" target="_blank" rel="noopener" href="https://www.linkedin.com/in/mostafasaad?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" id="linkLinkedinPersonal">
-          <span class="tile-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 0 0-4 0"/></svg></span>
-          <span class="tile-copy"><strong>LinkedIn — Mostafa Saad</strong><span>Personal profile and professional updates.</span></span>
-          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        <a class="channel-card" href="https://www.linkedin.com/in/mostafasaad?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener" id="linkLinkedinPersonal">
+          <span class="channel-icon ci-2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 0 0-4 0"/></svg>
+          </span>
+          <div class="channel-info">
+            <strong>LinkedIn — Mostafa Saad</strong>
+            <span>Personal profile and professional updates</span>
+          </div>
+          <svg class="channel-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
 
-        <a class="tile" target="_blank" rel="noopener" href="https://youtube.com/@arabiccompetitiveprogramming?si=lnjYLus9JtZKduaI" id="linkYoutube">
-          <span class="tile-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3Z"/></svg></span>
-          <span class="tile-copy"><strong>YouTube — Arabic CP</strong><span>Competitive programming lessons and videos.</span></span>
-          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        <a class="channel-card" href="https://youtube.com/@arabiccompetitiveprogramming?si=lnjYLus9JtZKduaI" target="_blank" rel="noopener" id="linkYoutube">
+          <span class="channel-icon ci-3">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3Z"/></svg>
+          </span>
+          <div class="channel-info">
+            <strong>YouTube — Arabic CP</strong>
+            <span>Competitive programming lessons and videos</span>
+          </div>
+          <svg class="channel-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
 
-        <a class="tile" target="_blank" rel="noopener" href="https://www.linkedin.com/company/cskilled/" id="linkLinkedinCompany">
-          <span class="tile-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 12h18"/></svg></span>
-          <span class="tile-copy"><strong>LinkedIn — CSkilled</strong><span>Company page, news, and opportunities.</span></span>
-          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        <a class="channel-card" href="https://www.linkedin.com/company/cskilled/" target="_blank" rel="noopener" id="linkLinkedinCompany">
+          <span class="channel-icon ci-4">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 12h18"/></svg>
+          </span>
+          <div class="channel-info">
+            <strong>LinkedIn — CSkilled</strong>
+            <span>Company page, news, and opportunities</span>
+          </div>
+          <svg class="channel-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       ⑤ FOOTER CTA STRIP
+  ═══════════════════════════════════════════════════════════════════ -->
+  <footer class="footer-strip" aria-label="Final call to action">
+    <div class="w footer-inner">
+      <div class="footer-text">
+        <strong>Don't miss the <em>10% OFF</em> offer.</strong>
+        <p>Use code <strong style="color:#fff">Genesis MET</strong> at checkout — limited time only.</p>
+      </div>
+      <div class="footer-actions">
+        <button class="btn btn-primary" id="footerCopy">
+          Copy code — Genesis MET
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+        <a class="btn btn-secondary" href="#channels">
+          Explore channels
         </a>
       </div>
-    </section>
-
-  </main>
+    </div>
+  </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite">Promocode copied ✓</div>
 
   <script>
     const body      = document.body;
     const toast     = document.getElementById("toast");
-    const promoText = document.getElementById("promoText").textContent;
+    const promoCode = document.getElementById("promoText").textContent.trim();
 
     /* ── Theme toggle ── */
     document.getElementById("themeToggle").addEventListener("click", () => {
       body.classList.toggle("dark");
     });
 
-    /* ── Copy promo code (all three buttons share the same handler) ── */
+    /* ── Copy handler ── */
     const copyPromo = async () => {
       try {
-        await navigator.clipboard.writeText(promoText);
+        await navigator.clipboard.writeText(promoCode);
         showToast("Promocode copied ✓");
       } catch {
-        showToast(promoText);
+        showToast(promoCode);
       }
     };
 
-    document.getElementById("heroCopy").addEventListener("click",     copyPromo);
-    document.getElementById("headerCopy").addEventListener("click",   copyPromo);
-    document.getElementById("heroCodeCopy").addEventListener("click", copyPromo);
+    ["heroCopy", "heroCodeCopy", "footerCopy"].forEach(id =>
+      document.getElementById(id).addEventListener("click", copyPromo)
+    );
 
     function showToast(msg) {
       toast.textContent = msg;
       toast.classList.add("show");
       clearTimeout(showToast._t);
-      showToast._t = setTimeout(() => toast.classList.remove("show"), 1900);
+      showToast._t = setTimeout(() => toast.classList.remove("show"), 2000);
     }
-
-    /* ── Counter animation ── */
-    const counters = document.querySelectorAll("[data-count]");
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(({ isIntersecting, target }) => {
-        if (!isIntersecting) return;
-        const end = Number(target.dataset.count);
-        let cur = 0;
-        const tick = () => {
-          cur += Math.max(1, Math.ceil(end / 24));
-          target.textContent = cur >= end ? end : cur;
-          if (cur < end) requestAnimationFrame(tick);
-        };
-        tick();
-        io.unobserve(target);
-      });
-    }, { threshold: .6 });
-
-    counters.forEach((c) => io.observe(c));
   </script>
 </body>
 </html>
