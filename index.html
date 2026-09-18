@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSkilled Mobile Hub</title>
+  <style>
+    :root {
+      --ink: #101828;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, .12);
+      --paper: #fffdf8;
+      --mint: #18c8a8;
+      --coral: #ff6b5f;
+      --amber: #f8b84e;
+      --blue: #3478f6;
+      --violet: #7c5cff;
+      --shadow: 0 22px 60px rgba(16, 24, 40, .18);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(130deg, rgba(24, 200, 168, .18), transparent 32%),
+        linear-gradient(250deg, rgba(255, 107, 95, .18), transparent 38%),
+        #f7f3ea;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(16, 24, 40, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 24, 40, .04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, #000, transparent 78%);
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    .page {
+      position: relative;
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 0 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .8);
+      box-shadow: 0 12px 32px rgba(16, 24, 40, .14);
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.1;
+    }
+
+    .brand span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .icon-button,
+    .theme-button {
+      width: 42px;
+      height: 42px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 248, .78);
+      color: var(--ink);
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(16, 24, 40, .08);
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .icon-button:hover,
+    .theme-button:hover {
+      transform: translateY(-2px);
+      background: #ffffff;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 460px);
+      align-items: center;
+      gap: clamp(28px, 6vw, 88px);
+      min-height: calc(100vh - 122px);
+      padding-bottom: 36px;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(24, 200, 168, .45);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .72);
+      color: #087563;
+      font-weight: 750;
+      font-size: 13px;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--mint);
+      box-shadow: 0 0 0 8px rgba(24, 200, 168, .16);
+    }
+
+    h1 {
+      max-width: 720px;
+      margin: 22px 0 16px;
+      font-size: clamp(42px, 8vw, 88px);
+      line-height: .95;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 620px;
+      margin: 0;
+      color: #475467;
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.7;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid transparent;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
+    }
+
+    .cta.primary {
+      color: #fff;
+      background: #111827;
+      box-shadow: 0 16px 34px rgba(17, 24, 39, .24);
+    }
+
+    .cta.secondary {
+      color: var(--ink);
+      background: rgba(255, 253, 248, .7);
+      border-color: var(--line);
+    }
+
+    .cta:hover {
+      transform: translateY(-3px);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 38px;
+      max-width: 600px;
+    }
+
+    .metric {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 248, .68);
+      backdrop-filter: blur(18px);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 22px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .phone-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 620px;
+      perspective: 1200px;
+    }
+
+    .orbit {
+      position: absolute;
+      width: min(92vw, 520px);
+      aspect-ratio: 1;
+      border: 1px dashed rgba(16, 24, 40, .18);
+      border-radius: 50%;
+      animation: spin 18s linear infinite;
+    }
+
+    .orbit::before,
+    .orbit::after {
+      content: "";
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--coral);
+      top: 36px;
+      left: 72px;
+      box-shadow: 300px 300px 0 var(--mint);
+    }
+
+    .phone {
+      position: relative;
+      width: min(82vw, 340px);
+      aspect-ratio: 9 / 18.6;
+      padding: 14px;
+      border-radius: 44px;
+      background: linear-gradient(145deg, #1d2939, #050505);
+      box-shadow: var(--shadow);
+      transform: rotateX(7deg) rotateY(-10deg);
+      transition: transform .2s ease;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      z-index: 3;
+      top: 12px;
+      left: 50%;
+      width: 102px;
+      height: 26px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: #050505;
+    }
+
+    .screen {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 34px;
+      background:
+        linear-gradient(150deg, rgba(52, 120, 246, .25), transparent 28%),
+        linear-gradient(330deg, rgba(255, 107, 95, .22), transparent 34%),
+        var(--paper);
+    }
+
+    .screen-header {
+      padding: 56px 20px 12px;
+    }
+
+    .screen-header p {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .screen-header h2 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.05;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 8px 18px;
+    }
+
+    .app-card {
+      min-height: 118px;
+      padding: 14px;
+      border: 0;
+      border-radius: 24px;
+      color: #111827;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(16, 24, 40, .12);
+      transition: transform .2s ease, filter .2s ease;
+    }
+
+    .app-card:hover,
+    .app-card.active {
+      transform: translateY(-5px) scale(1.02);
+      filter: saturate(1.12);
+    }
+
+    .app-card[data-color="mint"] {
+      background: #aaf3df;
+    }
+
+    .app-card[data-color="coral"] {
+      background: #ffb4a8;
+    }
+
+    .app-card[data-color="blue"] {
+      background: #b9d8ff;
+    }
+
+    .app-card[data-color="amber"] {
+      background: #ffe09a;
+    }
+
+    .app-card svg {
+      display: block;
+      width: 26px;
+      height: 26px;
+      margin-bottom: 18px;
+    }
+
+    .app-card strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .app-card span {
+      display: block;
+      margin-top: 4px;
+      color: rgba(17, 24, 39, .68);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .promo-panel {
+      margin: 14px 18px 0;
+      padding: 16px;
+      border-radius: 26px;
+      color: #fff;
+      background: #111827;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12);
+    }
+
+    .promo-panel span {
+      display: block;
+      color: rgba(255, 255, 255, .66);
+      font-size: 12px;
+    }
+
+    .promo-code {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px dashed rgba(255, 255, 255, .34);
+      font-size: 13px;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .copy-code {
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      color: var(--ink);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .dock {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 10px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, .65);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, .7);
+    }
+
+    .dock a {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1;
+      border-radius: 18px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      transition: transform .2s ease;
+    }
+
+    .dock a:hover {
+      transform: translateY(-4px);
+    }
+
+    .floating-card {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255, 253, 248, .88);
+      border: 1px solid rgba(255, 255, 255, .88);
+      box-shadow: 0 18px 48px rgba(16, 24, 40, .14);
+      backdrop-filter: blur(18px);
+      animation: float 4.8s ease-in-out infinite;
+    }
+
+    .floating-card.top {
+      top: 84px;
+      right: 0;
+    }
+
+    .floating-card.bottom {
+      left: 0;
+      bottom: 124px;
+      animation-delay: -1.5s;
+    }
+
+    .floating-card svg {
+      width: 24px;
+      height: 24px;
+      color: var(--blue);
+    }
+
+    .floating-card strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .floating-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .links-section {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 22px;
+      align-items: start;
+      padding: 50px 0 10px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .section-title p {
+      max-width: 360px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .link-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tile {
+      display: grid;
+      grid-template-columns: 50px minmax(0, 1fr) 32px;
+      align-items: center;
+      gap: 14px;
+      min-height: 78px;
+      padding: 14px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 248, .72);
+      text-decoration: none;
+      color: var(--ink);
+      box-shadow: 0 12px 30px rgba(16, 24, 40, .08);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .tile:hover {
+      transform: translateX(6px);
+      background: #fff;
+      border-color: rgba(52, 120, 246, .32);
+    }
+
+    .tile-icon {
+      display: grid;
+      place-items: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 18px;
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .tile:nth-child(2) .tile-icon {
+      background: var(--mint);
+    }
+
+    .tile:nth-child(3) .tile-icon {
+      background: var(--coral);
+    }
+
+    .tile:nth-child(4) .tile-icon {
+      background: var(--violet);
+    }
+
+    .tile strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .tile-copy,
+    .tile-copy span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tile-copy {
+      margin-top: 0;
+    }
+
+    .arrow {
+      justify-self: end;
+      opacity: .55;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 10;
+      transform: translate(-50%, 90px);
+      padding: 12px 16px;
+      border-radius: 999px;
+      color: #fff;
+      background: #111827;
+      box-shadow: 0 16px 40px rgba(16, 24, 40, .22);
+      opacity: 0;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+
+    .toast.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+
+    .dark {
+      color: #f9fafb;
+      background:
+        linear-gradient(130deg, rgba(24, 200, 168, .14), transparent 32%),
+        linear-gradient(250deg, rgba(255, 107, 95, .14), transparent 38%),
+        #111827;
+    }
+
+    .dark .lead,
+    .dark .section-title p,
+    .dark .brand span,
+      .dark .tile-copy,
+      .dark .tile-copy span,
+    .dark .metric span {
+      color: #b7c0ce;
+    }
+
+    .dark .icon-button,
+    .dark .theme-button,
+    .dark .metric,
+    .dark .tile,
+    .dark .floating-card,
+    .dark .eyebrow {
+      color: #f9fafb;
+      background: rgba(31, 41, 55, .74);
+      border-color: rgba(255, 255, 255, .12);
+    }
+
+    .dark .cta.secondary {
+      color: #f9fafb;
+      background: rgba(31, 41, 55, .72);
+      border-color: rgba(255, 255, 255, .14);
+    }
+
+    .dark .screen {
+      background:
+        linear-gradient(150deg, rgba(52, 120, 246, .22), transparent 28%),
+        linear-gradient(330deg, rgba(255, 107, 95, .18), transparent 34%),
+        #e9eef6;
+      color: var(--ink);
+    }
+
+    .dark .floating-card span {
+      color: #b7c0ce;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(1turn);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-14px);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .phone-stage {
+        min-height: 580px;
+        order: -1;
+      }
+
+      .links-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        width: min(100% - 24px, 1180px);
+        padding-top: 14px;
+      }
+
+      .topbar {
+        padding-bottom: 18px;
+      }
+
+      .nav-actions .icon-button {
+        display: none;
+      }
+
+      h1 {
+        font-size: 44px;
+      }
+
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-stage {
+        min-height: 540px;
+      }
+
+      .phone {
+        width: min(88vw, 310px);
+        transform: rotateX(4deg) rotateY(-4deg);
+      }
+
+      .floating-card {
+        display: none;
+      }
+
+      .tile {
+        grid-template-columns: 46px minmax(0, 1fr) 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar" aria-label="Page header">
+      <div class="brand">
+        <img src="skiled.jpeg" alt="CSkilled logo" />
+        <div>
+          <strong>CSkilled</strong>
+          <span>Mobile learning links</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <a class="icon-button" href="#links" aria-label="Go to links" title="Go to links">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+        <button class="theme-button" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Mobile landing section">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span>Creative mobile hub</div>
+        <h1>All your learning channels in one smart phone page.</h1>
+        <p class="lead">
+          A dynamic one-page experience for CSkilled links, social channels, and promo access.
+          Tap the mobile cards, copy the code, switch theme, and move through the page with a clean app-like feel.
+        </p>
+
+        <div class="cta-row">
+          <a class="cta primary" href="#links">
+            Explore links
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <button class="cta secondary" id="heroCopy">
+            Copy promocode
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="metrics" aria-label="Highlights">
+          <div class="metric">
+            <strong data-count="4">0</strong>
+            <span>quick channels</span>
+          </div>
+          <div class="metric">
+            <strong ></strong>
+            <span>percent promo</span>
+          </div>
+          <div class="metric">
+            <strong ></strong>
+            <span>mobile page</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone-stage">
+        <div class="orbit"></div>
+
+        <div class="floating-card top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+          <div>
+            <strong>Ready to launch</strong>
+            <span>Fast, clean, responsive</span>
+          </div>
+        </div>
+
+        <div class="phone" id="phone">
+          <div class="screen">
+            <div class="screen-header">
+              <p id="statusText">Today</p>
+              <h2 id="cardTitle">Choose your path</h2>
+            </div>
+
+            <div class="app-grid">
+              <button class="app-card active" data-title="Join Telegram" data-color="mint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                <strong>Telegram</strong>
+                <span>Announcements and community drops.</span>
+              </button>
+              <button class="app-card" data-title="Build your network" data-color="blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 0 0-4 0"/></svg>
+                <strong>LinkedIn</strong>
+                <span>Profiles, updates, and company news.</span>
+              </button>
+              <button class="app-card" data-title="Watch Arabic CP" data-color="coral">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3Z"/></svg>
+                <strong>YouTube</strong>
+                <span>Competitive programming videos.</span>
+              </button>
+              <button class="app-card" data-title="Unlock your discount" data-color="amber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><path d="M7 7h.01"/></svg>
+                <strong>Promo</strong>
+                <span>Tap copy and use the discount code.</span>
+              </button>
+            </div>
+
+            <div class="promo-panel">
+              <span>Promocode</span>
+              <div class="promo-code">
+                <code id="promoText">QuestMET.cskilled10%</code>
+                <button class="copy-code" id="copyCode" aria-label="Copy promocode">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <nav class="dock" aria-label="Quick links">
+              <a href="https://t.me/mostvision" target="_blank" rel="noopener" aria-label="Telegram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/mostafasaad?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener" aria-label="Mostafa Saad LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 0 0-4 0"/></svg>
+              </a>
+              <a href="https://youtube.com/@arabiccompetitiveprogramming?si=lnjYLus9JtZKduaI" target="_blank" rel="noopener" aria-label="YouTube">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3Z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/company/cskilled/" target="_blank" rel="noopener" aria-label="CSkilled LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 12h18"/></svg>
+              </a>
+            </nav>
+          </div>
+        </div>
+
+        <div class="floating-card bottom">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <div>
+            <strong>10% discount</strong>
+            <span>One tap to copy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="links-section" id="links" aria-label="Important links">
+      <div class="section-title">
+        <h2>Open the right channel fast.</h2>
+        <p>These cards keep the page useful on desktop and mobile, while the phone preview makes it feel alive.</p>
+      </div>
+
+      <div class="link-list">
+        <a class="tile" target="_blank" rel="noopener" href="https://t.me/mostvision">
+          <span class="tile-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></span>
+          <span class="tile-copy"><strong>Telegram - MostaVision</strong><span>Community, announcements, and updates.</span></span>
+          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+
+        <a class="tile" target="_blank" rel="noopener" href="https://www.linkedin.com/in/mostafasaad?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
+          <span class="tile-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 0 0-4 0"/></svg></span>
+          <span class="tile-copy"><strong>LinkedIn - Mostafa Saad</strong><span>Personal profile and professional updates.</span></span>
+          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+
+        <a class="tile" target="_blank" rel="noopener" href="https://youtube.com/@arabiccompetitiveprogramming?si=lnjYLus9JtZKduaI">
+          <span class="tile-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3Z"/></svg></span>
+          <span class="tile-copy"><strong>YouTube - Arabic CP</strong><span>Competitive programming lessons and videos.</span></span>
+          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+
+        <a class="tile" target="_blank" rel="noopener" href="https://www.linkedin.com/company/cskilled/">
+          <span class="tile-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 12h18"/></svg></span>
+          <span class="tile-copy"><strong>LinkedIn - CSkilled</strong><span>Company page, news, and opportunities.</span></span>
+          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Promocode copied</div>
+
+  <script>
+    const body = document.body;
+    const phone = document.getElementById("phone");
+    const cards = document.querySelectorAll(".app-card");
+    const title = document.getElementById("cardTitle");
+    const statusText = document.getElementById("statusText");
+    const toast = document.getElementById("toast");
+    const promoText = document.getElementById("promoText").textContent;
+
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      body.classList.toggle("dark");
+    });
+
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        cards.forEach((item) => item.classList.remove("active"));
+        card.classList.add("active");
+        title.textContent = card.dataset.title;
+        statusText.textContent = `${card.textContent.trim().split(/\s+/)[0]} selected`;
+      });
+    });
+
+    const copyPromo = async () => {
+      try {
+        await navigator.clipboard.writeText(promoText);
+        showToast("Promocode copied");
+      } catch (error) {
+        showToast(promoText);
+      }
+    };
+
+    document.getElementById("copyCode").addEventListener("click", copyPromo);
+    document.getElementById("heroCopy").addEventListener("click", copyPromo);
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    document.addEventListener("pointermove", (event) => {
+      if (window.innerWidth < 760) return;
+      const x = (event.clientX / window.innerWidth - .5) * 18;
+      const y = (event.clientY / window.innerHeight - .5) * -14;
+      phone.style.transform = `rotateX(${7 + y}deg) rotateY(${-10 + x}deg)`;
+    });
+
+    const counters = document.querySelectorAll("[data-count]");
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const number = entry.target;
+        const target = Number(number.dataset.count);
+        let current = 0;
+        const tick = () => {
+          current += Math.max(1, Math.ceil(target / 24));
+          number.textContent = current >= target ? target : current;
+          if (current < target) requestAnimationFrame(tick);
+        };
+        tick();
+        counterObserver.unobserve(number);
+      });
+    }, { threshold: .6 });
+
+    counters.forEach((counter) => counterObserver.observe(counter));
+  </script>
+</body>
+</html>
